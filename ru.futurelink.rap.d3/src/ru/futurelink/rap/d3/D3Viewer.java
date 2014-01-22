@@ -3,8 +3,11 @@
  */
 package ru.futurelink.rap.d3;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.jface.viewers.ContentViewer;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -19,12 +22,22 @@ public class D3Viewer
 {
 	private static final long serialVersionUID = 1L;
 		
-	private D3BrowserIntl			mBrowser;
+	private D3BrowserIntl				mBrowser;
+	private List<List<List<Object>>>	mViewData;
 
 	public D3Viewer(Composite composite, ID3Chart chart) {
 		super();
 		
 		mBrowser = new D3BrowserIntl(composite, chart);	
+	}
+	
+	@Override
+	public void setContentProvider(IContentProvider contentProvider) {
+		if (ID3ContentProvider.class.isAssignableFrom(contentProvider.getClass())) {
+			super.setContentProvider(contentProvider);
+		} else {
+			throw new UnsupportedOperationException("Can't use plain IContentProvider in D3Viewer, use ID3ContentProvider instead.");
+		}
 	}
 	
 	public void setLayoutData(GridData layoutData) {
@@ -39,11 +52,8 @@ public class D3Viewer
 	protected void inputChanged(Object input, Object oldInput) {
 		super.inputChanged(input, oldInput);
 		
-		mBrowser.setInput(input);		
-	}
-	
-	public void addDimension(String title, String label) {
-		mBrowser.addDimension(title, label);
+		mViewData = ((ID3ContentProvider)getContentProvider()).getDataRows();		
+		mBrowser.setInput(mViewData);		
 	}
 	
 	@Override
@@ -60,6 +70,7 @@ public class D3Viewer
 
 	@Override
 	public void refresh() {
+		mViewData = ((ID3ContentProvider)getContentProvider()).getDataRows();
 		mBrowser.refresh();
 	}
 

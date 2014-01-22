@@ -78,16 +78,6 @@ class D3BrowserIntl  extends Composite
 		}
 	}
 	
-	/**
-	 * Add chert dimension for data binding.
-	 * 
-	 * @param title
-	 * @param field
-	 */
-	public void addDimension(String title, String field) {
-		mDimensions.put(field, title);
-	}
-	
 	protected String getInitialScript() {
 		return "<!DOCTYPE html><meta charset=\"utf-8\">\n"+
 					mChart.getD3StyleSheet()+

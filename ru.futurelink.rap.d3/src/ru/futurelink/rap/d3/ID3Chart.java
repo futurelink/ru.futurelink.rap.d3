@@ -8,6 +8,9 @@ package ru.futurelink.rap.d3;
  *
  */
 public interface ID3Chart {
+	
+	public void setMargins(Integer marginTop, Integer marginLeft, Integer marginBotton, Integer marginRight);
+	
 	public String getD3PrepareData();	
 	public String getD3DrawData();
 	public String getD3RedrawData();

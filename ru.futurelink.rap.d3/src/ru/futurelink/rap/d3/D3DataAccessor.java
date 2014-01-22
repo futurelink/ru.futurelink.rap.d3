@@ -3,6 +3,7 @@
  */
 package ru.futurelink.rap.d3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.browser.Browser;
@@ -35,7 +36,7 @@ public class D3DataAccessor {
 		new BrowserFunction(mBrowser, "getDataRow") {
 	        @Override
 	        public Object function( Object[] arguments ) {
-	        	return getDataRow((int)arguments[0]);
+	        	return getDataRow((int)arguments[0]).toArray();
 	        }
 		};
 
@@ -53,7 +54,7 @@ public class D3DataAccessor {
 		new BrowserFunction(mBrowser, "getDataItem") {
 	        @Override
 	        public Object function( Object[] arguments ) {
-	        	return getDataItem((int)arguments[0], (int)arguments[1]);
+	        	return getDataItem((int)arguments[0], (int)arguments[1]).toArray();
 	        }
 		};
 
@@ -71,7 +72,7 @@ public class D3DataAccessor {
 	 * @return
 	 */
 	public Integer getDataRowsCount() {
-		return Integer.valueOf(1);
+		return ((List<?>)getViewer().getInput()).size();
 	}
 	
 	/**
@@ -80,8 +81,9 @@ public class D3DataAccessor {
 	 * @param rowIndex
 	 * @return
 	 */
-	public Object getDataRow(int rowIndex) {
-		return ((List<?>)getViewer().getInput()).toArray();
+	@SuppressWarnings("unchecked")
+	public List<List<?>> getDataRow(int rowIndex) {
+		return ((List<List<?>>)((List<?>)getViewer().getInput()).get(rowIndex));
 	}
 
 	/**
@@ -91,7 +93,11 @@ public class D3DataAccessor {
 	 * @return
 	 */
 	public Integer getDataItemsCount(int row) {
-		return Integer.valueOf(((List<?>)getViewer().getInput()).size());
+		if (row > getDataRowsCount()-1) {
+			return Integer.valueOf(0);
+		} else {
+			return Integer.valueOf(getDataRow(row).size());
+		}
 	}
 
 	/**
@@ -101,8 +107,12 @@ public class D3DataAccessor {
 	 * @param index
 	 * @return
 	 */
-	public Object getDataItem(int rowIndex, int index) {
-		return ((List<?>)((List<?>)getViewer().getInput()).get(index)).toArray();
+	public List<?> getDataItem(int rowIndex, int index) {
+		if (rowIndex > getDataRowsCount()-1) {
+			return new ArrayList<List<Object>>();
+		} else {
+			return ((List<?>)(getDataRow(rowIndex)).get(index));
+		}
 	}
 	
 }
