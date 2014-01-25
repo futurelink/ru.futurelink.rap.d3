@@ -3,7 +3,8 @@
  */
 package ru.futurelink.rap.d3;
 
-import java.util.HashMap;
+import java.io.InputStream;
+import java.util.Scanner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -23,7 +24,6 @@ class D3BrowserIntl  extends Composite
 	private Browser						mBrowser;
 	private Object						mData;
 	private boolean					mInitialized;
-	private HashMap<String, String>		mDimensions;
 
 	private D3DataAccessor				mAccessor;
 	private ID3Chart					mChart;
@@ -34,12 +34,12 @@ class D3BrowserIntl  extends Composite
 	public D3BrowserIntl(Composite parent, ID3Chart chart) {
 		super(parent, SWT.BORDER);
 
-		mChart = chart;
-		
-		mDimensions = new HashMap<String, String>();
-				
 		setLayout(new FillLayout());
 		mBrowser = new Browser(this, SWT.NONE);
+
+		mChart = chart;
+		mChart.setBrowser(mBrowser);
+				
 		mAccessor = new D3DataAccessor(this, mBrowser);
 		
 		mBrowser.addProgressListener(new ProgressListener() {			
@@ -48,8 +48,12 @@ class D3BrowserIntl  extends Composite
 			@Override
 			public void completed(ProgressEvent arg0) {
 				mInitialized = true;
-				mAccessor.createDataAccessFunctions();
+
+				mChart.initBrowserFunctions();
+				mAccessor.initDataAccessFunctions();
+
 				if(getInput() != null) {
+					mBrowser.evaluate("initChart();");
 					mBrowser.evaluate("prepareData();");
 					mBrowser.evaluate("drawData();");					
 				}
@@ -60,6 +64,18 @@ class D3BrowserIntl  extends Composite
 		});
 		
 		mBrowser.setText(getInitialScript());		
+	}
+
+	@SuppressWarnings("resource")
+	private String readScript() {
+		InputStream s = mChart.getD3FullScript();
+		return new Scanner(s,"UTF-8").useDelimiter("\\A").next();				
+	}
+
+	@SuppressWarnings("resource")
+	private String readStyle() {
+		InputStream s = mChart.getD3StyleSheet();
+		return new Scanner(s,"UTF-8").useDelimiter("\\A").next();				
 	}
 	
 	protected Object getInput() {
@@ -79,27 +95,16 @@ class D3BrowserIntl  extends Composite
 	}
 	
 	protected String getInitialScript() {
-		return "<!DOCTYPE html><meta charset=\"utf-8\">\n"+
-					mChart.getD3StyleSheet()+
-				"</meta><body>\n"+
+		return "<!DOCTYPE html><meta charset=\"utf-8\">\n" +
+				"<style>\n" +
+					readStyle() +
+				"</style>\n" +
+				"</meta><body>\n" +
 					"<script src=\"http://d3js.org/d3.v3.min.js\"></script>\n" +
-					"<script>"+
-					getD3InternalScript() +
-					"</script>"+
+					"<script>\n" +
+						readScript() +
+					"</script>\n" +
 				"</body>\n";
 	}
 
-	private String getD3InternalScript() {
-		return 
-			mChart.getD3InitialScript()	// Insert initial script (chart initialization)
-			+ "function drawData() {" 
-			+ mChart.getD3DrawData()		// Insert data drawing script
-			+ "}"
-			+ "function prepareData() {"
-			+ mChart.getD3PrepareData()	// Insert data preparing script
-			+ "}"
-			+ "function redrawData() {"
-			+ mChart.getD3RedrawData()		// Insert data updating script (animations etc.)
-			+ "}";
-	}
 }

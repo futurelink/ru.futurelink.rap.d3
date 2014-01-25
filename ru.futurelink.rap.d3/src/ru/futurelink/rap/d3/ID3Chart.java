@@ -3,6 +3,10 @@
  */
 package ru.futurelink.rap.d3;
 
+import java.io.InputStream;
+
+import org.eclipse.swt.browser.Browser;
+
 /**
  * @author pavlov
  *
@@ -10,10 +14,9 @@ package ru.futurelink.rap.d3;
 public interface ID3Chart {
 	
 	public void setMargins(Integer marginTop, Integer marginLeft, Integer marginBotton, Integer marginRight);
-	
-	public String getD3PrepareData();	
-	public String getD3DrawData();
-	public String getD3RedrawData();
-	public String getD3InitialScript();
-	public String getD3StyleSheet();
+	public void setBrowser(Browser browser);
+	public void initBrowserFunctions();
+
+	public InputStream getD3StyleSheet();
+	public InputStream getD3FullScript();
 }

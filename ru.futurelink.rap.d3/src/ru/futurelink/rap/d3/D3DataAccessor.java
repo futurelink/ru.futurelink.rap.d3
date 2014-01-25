@@ -31,7 +31,7 @@ public class D3DataAccessor {
 		return mViewer;
 	}
 	
-	public void createDataAccessFunctions() {
+	public void initDataAccessFunctions() {
 
 		new BrowserFunction(mBrowser, "getDataRow") {
 	        @Override
