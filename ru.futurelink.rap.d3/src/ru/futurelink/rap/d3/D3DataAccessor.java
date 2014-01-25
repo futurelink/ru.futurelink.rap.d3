@@ -116,7 +116,7 @@ public class D3DataAccessor {
 	 * @return
 	 */
 	public Object getDataItem(int rowIndex, int index) {
-		if (rowIndex > getDataRowsCount()-1) {
+		if ((rowIndex > getDataRowsCount()-1) || (getDataRow(rowIndex).get(index) == null)) {
 			return Integer.valueOf(0);
 		} else {
 			return getDataRow(rowIndex).get(index);

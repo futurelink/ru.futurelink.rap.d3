@@ -16,12 +16,12 @@ public class D3BarChart extends D3ScaledChart {
 
 	@Override
 	public InputStream getD3StyleSheet() {
-		return this.getClass().getResourceAsStream("/resources/charts/barchart.css");
+		return this.getClass().getResourceAsStream("/charts/barchart.css");
 	}
 
 	@Override
 	public InputStream getD3FullScript() {
-		return this.getClass().getResourceAsStream("/resources/charts/barchart.js");
+		return this.getClass().getResourceAsStream("/charts/barchart.js");
 	}
 
 }

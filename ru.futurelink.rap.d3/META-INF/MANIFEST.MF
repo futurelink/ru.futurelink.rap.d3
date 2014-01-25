@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: D3
 Bundle-SymbolicName: ru.futurelink.rap.d3
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.0
 Bundle-Activator: ru.futurelink.rap.d3.Activator
 Bundle-Vendor: Futurelink
 Require-Bundle: org.eclipse.core.runtime,
@@ -16,3 +16,5 @@ Import-Package: org.eclipse.jface.viewers,
  org.eclipse.swt.widgets
 Export-Package: ru.futurelink.rap.d3,
  ru.futurelink.rap.d3.charts
+Bundle-ClassPath: resources/,
+ .

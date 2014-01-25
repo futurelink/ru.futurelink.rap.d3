@@ -6,12 +6,7 @@ var width, height;
 var x,y;
 var xAxis, yAxis;
 
-var svg = d3.select("body").append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
-	.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+var svg;
 var bars;
 
 function initChart() {
@@ -26,6 +21,12 @@ function initChart() {
 	
 	xAxis = d3.svg.axis().scale(x).orient("bottom");
 	yAxis = d3.svg.axis().scale(y).orient("left");
+
+	svg = d3.select("body").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 }
 
 function prepareData() {

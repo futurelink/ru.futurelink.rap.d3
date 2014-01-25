@@ -20,12 +20,12 @@ public class D3MultiLineChart extends D3ScaledChart {
 
 	@Override
 	public InputStream getD3StyleSheet() {
-		return this.getClass().getResourceAsStream("/resources/charts/multilinechart.css");
+		return this.getClass().getResourceAsStream("/charts/multilinechart.css");
 	}
 
 	@Override
 	public InputStream getD3FullScript() {
-		return this.getClass().getResourceAsStream("/resources/charts/multilinechart.js");
+		return this.getClass().getResourceAsStream("/charts/multilinechart.js");
 	}
 	
 }
