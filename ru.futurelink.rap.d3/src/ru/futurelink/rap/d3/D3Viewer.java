@@ -27,7 +27,7 @@ public class D3Viewer
 	private static final long serialVersionUID = 1L;
 		
 	private D3BrowserIntl				mBrowser;
-	private List<List<List<Object>>>	mViewData;
+	private List<List<Object>>			mViewData;
 
 	public D3Viewer(Composite composite, ID3Chart chart) {
 		super();

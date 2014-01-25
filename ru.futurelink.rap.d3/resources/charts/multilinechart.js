@@ -38,12 +38,12 @@ function prepareData() {
 		var dataRow = [];
 		var dataItemsCount = getDataItemsCount(rowIndex);
 		for (var i = 0; i < dataItemsCount; i++) {
-			dataRow.push(getDataItem(rowIndex, i)[1]);
+			dataRow.push(getDataItem(rowIndex, i));
 		}
 		data.push(dataRow);
 	}
 
-	 // Create color domain from data rows except header row
+	// Create color domain from data rows except header row
     color.domain(d3.keys(data).filter(function(key) { return key !== "0"; }));
  
     // Create line data
@@ -74,7 +74,7 @@ function drawData() {
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
 		.call(xAxis);
-			
+
 	svg.append("g")
 		.attr("class", "y axis")
 		.call(yAxis)
@@ -84,8 +84,8 @@ function drawData() {
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text(getYAxisTitle());
-			
-	var row = svg.selectAll(".city")
+
+	svg.selectAll(".city")
 		.data(lines)
 		.enter().append("g")
 		.attr("class","city")				

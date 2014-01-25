@@ -36,8 +36,12 @@ public class D3BrowserIntl  extends Composite
 	 */
 	public D3BrowserIntl(Composite parent, ID3Chart chart) {
 		super(parent, SWT.BORDER);
-
-		setLayout(new FillLayout());
+		
+		FillLayout l = new FillLayout();
+		l.marginHeight = 0;
+		l.marginWidth = 0;
+		setLayout(l);
+		
 		mBrowser = new Browser(this, SWT.NONE);
 
 		mChart = chart;

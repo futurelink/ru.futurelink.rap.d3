@@ -3,7 +3,6 @@
  */
 package ru.futurelink.rap.d3;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.browser.Browser;
@@ -63,7 +62,7 @@ public class D3DataAccessor {
 		new BrowserFunction(mBrowser, "getDataItem") {
 	        @Override
 	        public Object function( Object[] arguments ) {
-	        	return getDataItem((int)arguments[0], (int)arguments[1]).toArray();
+	        	return getDataItem((int)arguments[0], (int)arguments[1]);
 	        }
 		};
 
@@ -81,7 +80,7 @@ public class D3DataAccessor {
 	 * @return
 	 */
 	public Integer getDataRowsCount() {
-		return ((List<?>)getViewer().getInput()).size();
+		return Integer.valueOf(((List<?>)getViewer().getInput()).size());
 	}
 	
 	/**
@@ -116,11 +115,11 @@ public class D3DataAccessor {
 	 * @param index
 	 * @return
 	 */
-	public List<?> getDataItem(int rowIndex, int index) {
+	public Object getDataItem(int rowIndex, int index) {
 		if (rowIndex > getDataRowsCount()-1) {
-			return new ArrayList<List<Object>>();
+			return Integer.valueOf(0);
 		} else {
-			return ((List<?>)(getDataRow(rowIndex)).get(index));
+			return getDataRow(rowIndex).get(index);
 		}
 	}
 	

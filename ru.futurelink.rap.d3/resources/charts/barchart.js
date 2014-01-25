@@ -35,7 +35,7 @@ function prepareData() {
 		var dataRow = [];
 		var dataItemsCount = getDataItemsCount(rowIndex);
 		for (var i = 0; i < dataItemsCount; i++) {
-			dataRow.push(getDataItem(rowIndex, i)[1]);
+			dataRow.push(getDataItem(rowIndex, i));
 		}
 		data.push(dataRow);
 	}
