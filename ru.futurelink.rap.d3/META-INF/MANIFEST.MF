@@ -14,4 +14,5 @@ Import-Package: org.eclipse.jface.viewers,
  org.eclipse.swt.browser,
  org.eclipse.swt.layout,
  org.eclipse.swt.widgets
-Export-Package: ru.futurelink.rap.d3
+Export-Package: ru.futurelink.rap.d3,
+ ru.futurelink.rap.d3.charts

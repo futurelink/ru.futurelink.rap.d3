@@ -12,7 +12,6 @@ import org.eclipse.swt.browser.Browser;
  *
  */
 public interface ID3Chart {
-	
 	public void setMargins(Integer marginTop, Integer marginLeft, Integer marginBotton, Integer marginRight);
 	public void setBrowser(Browser browser);
 	public void initBrowserFunctions();

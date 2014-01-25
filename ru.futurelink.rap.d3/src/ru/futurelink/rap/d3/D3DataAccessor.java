@@ -9,8 +9,18 @@ import java.util.List;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
 
+import ru.futurelink.rap.d3.internal.D3BrowserIntl;
+
 /**
- * Abstract data accessor to D3 component.
+ * Data accessor to D3 component.
+ * 
+ * This accessor contains functions:
+ *  - getDataRow
+ *  - getDataRowCount
+ *  - getDataItem
+ *  - getDataItemCount
+ * 
+ * It provides access to plain two-dimensional data arrays only.
  * 
  * @author pavlov
  *
@@ -32,7 +42,6 @@ public class D3DataAccessor {
 	}
 	
 	public void initDataAccessFunctions() {
-
 		new BrowserFunction(mBrowser, "getDataRow") {
 	        @Override
 	        public Object function( Object[] arguments ) {

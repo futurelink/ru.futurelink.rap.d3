@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ru.futurelink.rap.d3;
+package ru.futurelink.rap.d3.internal;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -13,11 +13,14 @@ import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import ru.futurelink.rap.d3.D3DataAccessor;
+import ru.futurelink.rap.d3.ID3Chart;
+
 /**
  * @author pavlov
  *
  */
-class D3BrowserIntl  extends Composite 
+public class D3BrowserIntl  extends Composite 
 {		
 	private static final long serialVersionUID = 1L;
 
@@ -78,7 +81,7 @@ class D3BrowserIntl  extends Composite
 		return new Scanner(s,"UTF-8").useDelimiter("\\A").next();				
 	}
 	
-	protected Object getInput() {
+	public Object getInput() {
 		return mData;
 	}
 	

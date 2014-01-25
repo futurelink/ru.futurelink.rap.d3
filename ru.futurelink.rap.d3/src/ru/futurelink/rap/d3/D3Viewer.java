@@ -13,7 +13,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import ru.futurelink.rap.d3.internal.D3BrowserIntl;
+
 /**
+ * This is a base viewer class to display D3 charts.
+ * 
  * @author pavlov
  *
  */
@@ -39,11 +43,21 @@ public class D3Viewer
 			throw new UnsupportedOperationException("Can't use plain IContentProvider in D3Viewer, use ID3ContentProvider instead.");
 		}
 	}
-	
+
+	/**
+	 * Sets layout data to assigned control element.
+	 * 
+	 * @param layoutData
+	 */
 	public void setLayoutData(GridData layoutData) {
 		getControl().setLayoutData(layoutData);
 	}
 	
+	/**
+	 * Sets layout data to assigned control element.
+	 * 
+	 * @param layoutData
+	 */
 	public void setLayoutData(LayoutData layoutData) {
 		getControl().setLayoutData(layoutData);
 	}
