@@ -1,20 +1,18 @@
 /**
  * 
  */
-package ru.futurelink.rap.d3;
-
-import java.io.InputStream;
+package ru.futurelink.rap.d3.charts;
 
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
+
+import ru.futurelink.rap.d3.ID3Chart;
 
 /**
  * @author pavlov
  *
  */
-public class D3BarChart implements ID3Chart {
-	public D3BarChart() {}
-
+public abstract class D3ScaledChart implements ID3Chart {
 	private String mYAxisTitle;
 
 	private Integer mMarginTop = 10;
@@ -25,11 +23,6 @@ public class D3BarChart implements ID3Chart {
 	private Browser mBrowser;
 
 	@Override
-	public InputStream getD3StyleSheet() {
-		return this.getClass().getResourceAsStream("/resources/charts/barchart.css");
-	}
-
-	@Override
 	public void setMargins(Integer marginTop, Integer marginLeft,
 			Integer marginBotton, Integer marginRight) {
 		mMarginTop = marginTop;
@@ -37,12 +30,7 @@ public class D3BarChart implements ID3Chart {
 		mMarginLeft = marginLeft;
 		mMarginRight = marginRight;
 	}
-
-	@Override
-	public InputStream getD3FullScript() {
-		return this.getClass().getResourceAsStream("/resources/charts/barchart.js");
-	}
-
+	
 	@Override
 	public void setBrowser(Browser browser) {
 		mBrowser = browser;
@@ -51,7 +39,7 @@ public class D3BarChart implements ID3Chart {
 	public void setYAxisTitle(String title) {
 		mYAxisTitle = title;
 	}
-	
+
 	@Override
 	public void initBrowserFunctions() {
 		new BrowserFunction(mBrowser, "getYAxisTitle") {
@@ -75,4 +63,5 @@ public class D3BarChart implements ID3Chart {
 	        }
 		};
 	}
+
 }
