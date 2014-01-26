@@ -36,7 +36,7 @@ public class D3BrowserIntl  extends Composite
 	 * @param parent
 	 */
 	public D3BrowserIntl(Composite parent, ID3Chart chart) {
-		super(parent, SWT.BORDER);
+		super(parent, SWT.NONE);
 		
 		FillLayout l = new FillLayout();
 		l.marginHeight = 0;
