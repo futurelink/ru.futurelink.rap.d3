@@ -3,6 +3,8 @@
  */
 package ru.futurelink.rap.d3;
 
+import java.sql.RowId;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.browser.Browser;
@@ -71,7 +73,14 @@ public class D3DataAccessor {
 	        public Object function( Object[] arguments ) {
 	        	return getDataItemsCount((int)arguments[0]);
 	        }
-		};		
+		};
+		
+		new BrowserFunction(mBrowser, "getLabels") {
+	        @Override
+	        public Object function( Object[] arguments ) {
+	        	return getLabels().toArray();
+	        }
+		};	
 	}
 	
 	/**
@@ -123,4 +132,15 @@ public class D3DataAccessor {
 		}
 	}
 	
+	/**
+	 * Get an array of data row labels to create legend etc.
+	 * 
+	 * @return
+	 */
+	public List<?> getLabels() {
+		if (getViewer().getLabels() != null)
+			return ((List<?>)getViewer().getLabels());
+		else
+			return new ArrayList<String>();
+	}
 }

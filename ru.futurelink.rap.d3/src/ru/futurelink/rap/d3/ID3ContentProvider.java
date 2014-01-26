@@ -19,4 +19,6 @@ public interface ID3ContentProvider extends IContentProvider {
 	 * @return
 	 */
 	public List<List<Object>> getDataRows();
+	
+	public List<Object> getDataLabels();	
 }

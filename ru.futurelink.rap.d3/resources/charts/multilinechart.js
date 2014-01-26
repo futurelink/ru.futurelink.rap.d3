@@ -4,8 +4,10 @@ var margin, width, height;
 var x,y,color,xAxis,yAxis;
 
 var lines;
-
+var labels;
 var line, svg;
+
+var columns;
 
 function initChart() {
 	var remoteMargins = getMargins();
@@ -43,24 +45,34 @@ function prepareData() {
 		data.push(dataRow);
 	}
 
+	labels = getLabels();
+
 	// Create color domain from data rows except header row
-    color.domain(d3.keys(data).filter(function(key) { return key !== "0"; }));
- 
+    color.domain(d3.keys(labels).filter(function(key) { return key !== "0"; }));
+    columns = d3.keys(data);
+    
     // Create line data
-    lines = color.domain().map(function(rowNumber) {
+    lines = color.domain().map(function(rowNumber) {   	   	
+    	var rowValues = d3.keys(data).map(function(i) {
+    		return { 
+    			x: data[i][0],
+    			y: data[i][rowNumber] 
+    		};
+    	});
+    	
     	return {
     		rowNumber: rowNumber,
-    		points: d3.keys(data[0]).map(function(d) {
-    			return {x: d3.values(data[0])[d], y: data[rowNumber][d]};
-    		})
+    		points: rowValues
     	};
     });
+    
+    console.log(lines);
 }
 
 function drawData() {
     // Create X domain from row indices
-    var ordinalRange = d3.range(0, width, width / d3.set(data[0]).size());
-    x.domain(data[0]).range(ordinalRange);
+    var ordinalRange = d3.range(0, width, width / d3.set(columns).size());
+    x.domain(columns.map(function(d) { return data[d][0]; })).range(ordinalRange);
 
     var linearRange = [0, width];
     //x.domain(d3.extent(data[0], function(d) { return d; })).range(linearRange);
@@ -93,6 +105,27 @@ function drawData() {
 			.attr("class", "line")
 			.attr("d", function(d) { return line(d.points); })
 			.style("stroke", function(d) { return color(d.rowNumber); });
+
+	// Draw legend
+	var rowLabelIndices = d3.keys(labels).filter(function(key) { return key !== "0"; });
+	var legend = svg.selectAll(".legend")
+		.data(rowLabelIndices)
+	    .enter().append("g")
+	    	.attr("class", "legend")
+	      	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+	legend.append("rect")
+	    .attr("x", width - 18)
+	    .attr("width", 18)
+	    .attr("height", 18)
+	    .style("fill", function(d) { return color(d); });
+
+	legend.append("text")
+	    .attr("x", width - 24)
+	    .attr("y", 9)
+	    .attr("dy", ".35em")
+	    .style("text-anchor", "end")
+	    .text(function(d) { return labels[d]; });	
 }
 
 function redrawData() {

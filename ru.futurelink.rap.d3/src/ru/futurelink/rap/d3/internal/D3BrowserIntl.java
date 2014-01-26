@@ -26,6 +26,7 @@ public class D3BrowserIntl  extends Composite
 
 	private Browser						mBrowser;
 	private Object						mData;
+	private Object						mLabels;
 	private boolean					mInitialized;
 
 	private D3DataAccessor				mAccessor;
@@ -85,12 +86,29 @@ public class D3BrowserIntl  extends Composite
 		return new Scanner(s,"UTF-8").useDelimiter("\\A").next();				
 	}
 	
+	/**
+	 * Returns data processed by content provider.
+	 * 
+	 * @return
+	 */
 	public Object getInput() {
 		return mData;
 	}
 	
-	public void setInput(Object data) {
+	public Object getLabels() {
+		return mLabels;
+	}
+	
+	/**
+	 * Sets data to displayed, data must be processed by content provider.
+	 * So what we pass here is what we see on chart.
+	 * 
+	 * @param data
+	 * @param labels
+	 */
+	public void setInput(Object data, Object labels) {
 		mData = data;
+		mLabels = labels;
 	}
 
 	public void refresh() {

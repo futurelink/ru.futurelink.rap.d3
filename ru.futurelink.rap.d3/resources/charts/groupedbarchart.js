@@ -12,6 +12,7 @@ var color;
 var xAxis;
 var yAxis;
 var svg;
+var labels = [];
 
 function initChart() {
 	var remoteMargins = getMargins();
@@ -24,8 +25,8 @@ function initChart() {
 	x1 = d3.scale.ordinal();
 	y = d3.scale.linear().range([height, 0]);
 
-	color = d3.scale.ordinal()
-    	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+	color = d3.scale.category10();
+    	//.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	xAxis = d3.svg.axis()
     	.scale(x0)
@@ -54,31 +55,22 @@ function prepareData() {
 		}
 		data.push(dataRow);
 	}
+
+	labels = getLabels();
 }
 
 function drawData() {
-	// Row titles
-	var rows = d3.keys(data).filter(function(key) { return key !== "0"; });
+	var rowLabelIndices = d3.keys(labels).filter(function(key) { return key !== "0"; });
 	var columns = d3.keys(data[0]);
-	var rowData = rows.map(function(d) { return { "values" : data[d] }; });
-
-	// Rotating and grouping data
-	var groupedData = columns.map(function(col) {
-		return { 
-			"title" : data[0][col],  
-			"values" : rows.map(function(row) {				
-				return {
-					"title" : row,
-					"value" : data[row][col] 
-				};
-			})
-		}
+	
+	data.forEach(function(d) {
+	    d.values = rowLabelIndices.map(function(index) { return {title: index, value: +d[index]}; });
 	});
 
-	x0.domain(d3.values(data[0])); 							// Main X scale	
-	x1.domain(rows).rangeRoundBands([0, x0.rangeBand()]);	// Second X scale	
-	y.domain([0, d3.max(rowData, function(c) { return d3.max(c.values, function(v) { return v; }); })]);
-
+	x0.domain(data.map(function(d) { return d[0]; })); 					// Main X scale
+	x1.domain(rowLabelIndices).rangeRoundBands([0, x0.rangeBand()]);	// Second X scale
+	y.domain([0, d3.max(data, function(d) { return d3.max(d.values, function(d) { return d.value; }); })]);
+	
 	svg.append("g")
 	      .attr("class", "x axis")
 	      .attr("transform", "translate(0," + height + ")")
@@ -96,11 +88,11 @@ function drawData() {
 	
 	// Create group of bars
 	var state = svg.selectAll(".state")
-	      .data(groupedData)
+	      .data(data)
 	    .enter().append("g")
 	      .attr("class", "g")
-	      .attr("transform", function(d) { return "translate(" + x0(d.title) + ",0)"; });
-
+	      .attr("transform", function(d) { return "translate(" + x0(d[0]) + ",0)"; });
+	
 	// Create bars in group
 	state.selectAll("rect")
 	      .data(function(d) { return d.values; })
@@ -112,8 +104,8 @@ function drawData() {
 	      .style("fill", function(d) { return color(d.title); });
 
 	  // Draw legend
-	  /*var legend = svg.selectAll(".legend")
-	      .data(ageNames.slice().reverse())
+	  var legend = svg.selectAll(".legend")
+	      .data(rowLabelIndices)
 	      .enter().append("g")
 	      	.attr("class", "legend")
 	      	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
@@ -122,14 +114,14 @@ function drawData() {
 	      .attr("x", width - 18)
 	      .attr("width", 18)
 	      .attr("height", 18)
-	      .style("fill", color);
+	      .style("fill", function(d) { return color(d); });
 
 	  legend.append("text")
 	      .attr("x", width - 24)
 	      .attr("y", 9)
 	      .attr("dy", ".35em")
 	      .style("text-anchor", "end")
-	      .text(function(d) { return d; });*/	
+	      .text(function(d) { return labels[d]; });	
 }
 
 function redrawData() {

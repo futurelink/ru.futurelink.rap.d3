@@ -28,6 +28,7 @@ public class D3Viewer
 		
 	private D3BrowserIntl				mBrowser;
 	private List<List<Object>>			mViewData;
+	private List<Object>				mViewLabels;
 
 	public D3Viewer(Composite composite, ID3Chart chart) {
 		super();
@@ -66,8 +67,10 @@ public class D3Viewer
 	protected void inputChanged(Object input, Object oldInput) {
 		super.inputChanged(input, oldInput);
 		
-		mViewData = ((ID3ContentProvider)getContentProvider()).getDataRows();		
-		mBrowser.setInput(mViewData);		
+		mViewData = ((ID3ContentProvider)getContentProvider()).getDataRows();
+		mViewLabels = ((ID3ContentProvider)getContentProvider()).getDataLabels();
+
+		mBrowser.setInput(mViewData, mViewLabels);		
 	}
 	
 	@Override
