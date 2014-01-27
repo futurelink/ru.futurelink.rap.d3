@@ -7,3 +7,9 @@ body {
 .arc path {
 	stroke: #fff;
 }
+
+.nodatatext {
+	font: 30pt sans-serif;
+	stroke: #444;
+	fill: #aaa;
+}

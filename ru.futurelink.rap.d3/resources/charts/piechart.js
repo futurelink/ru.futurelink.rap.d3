@@ -5,8 +5,14 @@
 var width, height, radius;
 
 var color;
-var arc;
+var arc, pie;
 var svg;
+
+var displayedRow = 1;
+var path;
+
+var labelRadius;
+var nodata;
 
 function initChart() {
 	var remoteMargins = getMargins();
@@ -18,9 +24,11 @@ function initChart() {
 	
 	color = d3.scale.category10();
 	arc = d3.svg.arc()
-	    .outerRadius(radius - 20)
-	    .innerRadius(radius / 2);
+	    .outerRadius(1)
+	    .innerRadius(1);
 	
+	labelRadius = radius - 10;
+
 	svg = d3.select("body").append("svg")
 		.attr("width", width)
 		.attr("height", height)
@@ -45,9 +53,21 @@ function prepareData() {
 
 function drawData() {
 
-	var displayedRow = 1;
+	// Draw NODATA chart if data is empty
+	if (d3.keys(data).length == 0) {			
+		nodata = svg.append("text")
+			.attr("class", "nodatatext")
+			.attr("transform", function(d) { return "translate(" + (width/2) + ", " + (height/2) + ");" })
+			.attr("text-anchor", "middle")
+			.text(getNoDataText());		
+		return;
+	} else {
+		nodata = null;
+	}
+	
+	displayedRow = 1;
 
-	var pie = d3.layout.pie()
+	pie = d3.layout.pie()
     	.sort(null)
     	.value(function(d) { return d[displayedRow]; });
   
@@ -56,18 +76,41 @@ function drawData() {
     	.enter().append("g")
     	.attr("class", "arc");
 
-	g.append("path")
-		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data[0]); });
+	path = g.append("path")	
+		.attr({
+			"d": arc, 
+			"fill": function(d,i) { return color(d.data[0]); }
+		});
+    
+	path.transition().duration(500).ease("bounce")
+		.attr({
+			"d" : arc.outerRadius(radius - 20).innerRadius(radius / 2)
+		});
 
 	g.append("text")
-		.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+		.attr("transform", function(d) { 
+			var c = arc.centroid(d); var x = c[0]; var y = c[1]; var h = Math.sqrt(x*x + y*y);
+			return "translate(" + (x/h * labelRadius) +  ',' + (y/h * labelRadius) +  ")"; 
+        }) 
 		.attr("dy", ".15em")
-		.style("text-anchor", "middle")
+		.attr("text-anchor", function(d) { return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start"; })
 		.text(function(d) { return d.data[0]; });
 
 }
 
 function redrawData() {
-	
+	if (path != null) {
+		path.transition()
+			.duration(100)
+			.attr({
+				"d" : arc.outerRadius(1).innerRadius(1)
+			})
+			.remove();
+	}
+
+	svg.selectAll(".nodatatext").remove();
+	svg.selectAll(".arc").data([]).exit().remove();
+
+	drawData();
 }
+

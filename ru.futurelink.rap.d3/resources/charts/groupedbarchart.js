@@ -14,6 +14,8 @@ var yAxis;
 var svg;
 var labels = [];
 
+var nodata;
+
 function initChart() {
 	var remoteMargins = getMargins();
 	margin = {top: remoteMargins[0], left: remoteMargins[1], bottom: remoteMargins[2], right: remoteMargins[3]};
@@ -26,7 +28,6 @@ function initChart() {
 	y = d3.scale.linear().range([height, 0]);
 
 	color = d3.scale.category10();
-    	//.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 	xAxis = d3.svg.axis()
     	.scale(x0)
@@ -60,6 +61,19 @@ function prepareData() {
 }
 
 function drawData() {
+
+	// Draw NODATA chart if data is empty
+	if (d3.keys(data).length == 0) {			
+		nodata = svg.append("text")
+			.attr("class", "nodatatext")
+			.attr("transform", function(d) { return "translate(" + (width/2) + ", " + (height/2) + ");" })
+			.attr("text-anchor", "middle")
+			.text(getNoDataText());		
+		return;
+	} else {
+		nodata = null;
+	}
+	
 	var rowLabelIndices = d3.keys(labels).filter(function(key) { return key !== "0"; });
 	var columns = d3.keys(data[0]);
 	
