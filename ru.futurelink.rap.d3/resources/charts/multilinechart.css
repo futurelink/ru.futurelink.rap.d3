@@ -19,3 +19,9 @@ body {
 	stroke: steelblue;
 	stroke-width: 1.5px;
 }
+
+.nodatatext {
+	font: 30pt sans-serif;
+	stroke: #444;
+	fill: #aaa;
+}

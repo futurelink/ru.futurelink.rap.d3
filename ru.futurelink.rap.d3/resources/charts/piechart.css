@@ -8,8 +8,14 @@ body {
 	stroke: #fff;
 }
 
-.nodatatext {
+.nodataText {
 	font: 30pt sans-serif;
 	stroke: #444;
+	fill: #aaa;
+}
+
+.centerText {
+	font: 24pt sans-serif;
+	stroke: #aaa;
 	fill: #aaa;
 }

@@ -5,7 +5,7 @@
 var width, height, radius;
 
 var color;
-var arc, pie;
+var arc;
 var svg;
 
 var displayedRow = 1;
@@ -56,7 +56,7 @@ function drawData() {
 	// Draw NODATA chart if data is empty
 	if (d3.keys(data).length == 0) {			
 		nodata = svg.append("text")
-			.attr("class", "nodatatext")
+			.attr("class", "nodataText")
 			.attr("transform", function(d) { return "translate(" + (width/2) + ", " + (height/2) + ");" })
 			.attr("text-anchor", "middle")
 			.text(getNoDataText());		
@@ -66,8 +66,9 @@ function drawData() {
 	}
 	
 	displayedRow = 1;
-
-	pie = d3.layout.pie()
+	
+	// Add pie to chart
+	var pie = d3.layout.pie()
     	.sort(null)
     	.value(function(d) { return d[displayedRow]; });
   
@@ -96,6 +97,13 @@ function drawData() {
 		.attr("text-anchor", function(d) { return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start"; })
 		.text(function(d) { return d.data[0]; });
 
+	// Add center text
+	svg.append("text")
+		.attr("class", "centerText")
+		.attr("transform", function(d) { return "translate(" + (width/2) + ", " + (height/2) + ");" })
+		.attr("text-anchor", "middle")
+		.text(getCenterText());		
+	
 }
 
 function redrawData() {
@@ -108,7 +116,8 @@ function redrawData() {
 			.remove();
 	}
 
-	svg.selectAll(".nodatatext").remove();
+	svg.selectAll(".nodataText").remove();
+	svg.selectAll(".centerText").remove();
 	svg.selectAll(".arc").data([]).exit().remove();
 
 	drawData();

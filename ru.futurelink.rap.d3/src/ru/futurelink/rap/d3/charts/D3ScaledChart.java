@@ -21,7 +21,7 @@ public abstract class D3ScaledChart implements ID3Chart {
 	private Integer mMarginLeft = 10;
 	private Integer mMarginRight = 10;
 	
-	private Browser mBrowser;
+	protected Browser mBrowser;
 
 	@Override
 	public void setMargins(Integer marginTop, Integer marginLeft,
