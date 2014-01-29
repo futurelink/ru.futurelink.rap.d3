@@ -34,8 +34,8 @@ function initChart() {
 }
 
 function prepareData() {
-	data = [];
-	var rowCount = getDataRowsCount();				
+	data = getDataArray();
+	/*var rowCount = getDataRowsCount();				
 	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 		var dataRow = [];
 		var dataItemsCount = getDataItemsCount(rowIndex);
@@ -43,7 +43,7 @@ function prepareData() {
 			dataRow.push(getDataItem(rowIndex, i));
 		}
 		data.push(dataRow);
-	}
+	}*/
 
 	labels = getLabels();
 
@@ -70,7 +70,10 @@ function prepareData() {
 }
 
 function drawData() {
-    // Create X domain from row indices
+    
+	prepareData();
+
+	// Create X domain from row indices
     var ordinalRange = d3.range(0, width, width / d3.set(columns).size());
     x.domain(columns.map(function(d) { return data[d][0]; })).range(ordinalRange);
 

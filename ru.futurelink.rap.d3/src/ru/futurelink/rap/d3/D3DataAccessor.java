@@ -79,7 +79,17 @@ public class D3DataAccessor {
 	        public Object function( Object[] arguments ) {
 	        	return getLabels().toArray();
 	        }
-		};	
+		};
+		
+		/**
+		 * Get data 2-dimensional array.
+		 */
+		new BrowserFunction(mBrowser, "getDataArray") {
+			@Override
+			public Object function(Object[] arguments) {
+				return getDataArray();
+			}
+		};
 	}
 	
 	/**
@@ -141,5 +151,21 @@ public class D3DataAccessor {
 			return ((List<?>)getViewer().getLabels());
 		else
 			return new ArrayList<String>();
+	}
+	
+	/**
+	 * Get 2-dimensional array of data.
+	 * 
+	 * @return
+	 */
+	public Object getDataArray() {
+		int rowsCount = getDataRowsCount();		
+
+		Object[] array = new Object[rowsCount];
+		for (int i = 0; i < rowsCount; i++) {
+			array[i] = getDataRow(i).toArray();
+		}
+
+		return array;
 	}
 }

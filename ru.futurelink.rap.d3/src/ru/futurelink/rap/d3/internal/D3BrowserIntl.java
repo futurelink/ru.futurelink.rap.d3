@@ -61,9 +61,13 @@ public class D3BrowserIntl  extends Composite
 				mAccessor.initDataAccessFunctions();
 
 				if(getInput() != null) {
-					mBrowser.evaluate("initChart();");
-					mBrowser.evaluate("prepareData();");
-					mBrowser.evaluate("drawData();");					
+					try {
+						mBrowser.evaluate("initChart();");
+						//mBrowser.evaluate("prepareData();");
+						mBrowser.evaluate("drawData();");
+					} catch (Exception ex) {
+						// TODO Display can't render chart here
+					}
 				}
 			}
 			
@@ -114,7 +118,7 @@ public class D3BrowserIntl  extends Composite
 	public void refresh() {
 		if ((mBrowser == null) || mBrowser.isDisposed()) return;
 		if (mInitialized) {
-			mBrowser.evaluate("prepareData()");
+			//mBrowser.evaluate("prepareData()");
 			mBrowser.evaluate("redrawData();");
 		}
 	}

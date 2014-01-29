@@ -37,8 +37,9 @@ function initChart() {
 }
 
 function prepareData() {
-	data = [];
-	var rowCount = getDataRowsCount();				
+	data = getDataArray();
+
+	/*var rowCount = getDataRowsCount();				
 	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 		var dataRow = [];
 		var dataItemsCount = getDataItemsCount(rowIndex);
@@ -46,12 +47,14 @@ function prepareData() {
 			dataRow.push(getDataItem(rowIndex, i));
 		}
 		data.push(dataRow);
-	}
+	}*/
 
 	labels = getLabels();		
 }
 
 function drawData() {
+
+	prepareData();
 
 	// Draw NODATA chart if data is empty
 	if (d3.keys(data).length == 0) {			
@@ -109,7 +112,7 @@ function drawData() {
 function redrawData() {
 	if (path != null) {
 		path.transition()
-			.duration(100)
+			.duration(500)
 			.attr({
 				"d" : arc.outerRadius(1).innerRadius(1)
 			})
@@ -120,6 +123,7 @@ function redrawData() {
 	svg.selectAll(".centerText").remove();
 	svg.selectAll(".arc").data([]).exit().remove();
 
+	prepareData();	
 	drawData();
 }
 

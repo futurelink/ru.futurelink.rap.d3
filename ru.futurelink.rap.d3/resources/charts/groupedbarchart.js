@@ -46,8 +46,8 @@ function initChart() {
 }
 
 function prepareData() {	
-	data = [];
-	var rowCount = getDataRowsCount();				
+	data = getDataArray();
+	/*var rowCount = getDataRowsCount();				
 	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 		var dataRow = [];
 		var dataItemsCount = getDataItemsCount(rowIndex);
@@ -55,13 +55,15 @@ function prepareData() {
 			dataRow.push(getDataItem(rowIndex, i));
 		}
 		data.push(dataRow);
-	}
+	}*/
 
 	labels = getLabels();
 }
 
 function drawData() {
 
+	prepareData();
+	
 	// Draw NODATA chart if data is empty
 	if (d3.keys(data).length == 0) {			
 		nodata = svg.append("text")
