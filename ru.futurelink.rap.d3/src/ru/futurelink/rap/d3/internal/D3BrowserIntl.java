@@ -21,9 +21,11 @@ import ru.futurelink.rap.d3.ID3Chart;
  *
  */
 public class D3BrowserIntl  extends Composite 
-{		
+{
 	private static final long serialVersionUID = 1L;
 
+	private static String				D3JS = "https://fluvio.ru/static/d3.v3.min.js";
+	
 	private Browser						mBrowser;
 	private Object						mData;
 	private Object						mLabels;
@@ -129,7 +131,7 @@ public class D3BrowserIntl  extends Composite
 					readStyle() +
 				"</style>\n" +
 				"</meta><body>\n" +
-					"<script src=\"http://d3js.org/d3.v3.min.js\"></script>\n" +
+					"<script src=\""+D3JS+"\"></script>\n" +
 					"<script>\n" +
 						readScript() +
 					"</script>\n" +

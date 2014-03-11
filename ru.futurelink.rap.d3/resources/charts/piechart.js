@@ -38,17 +38,6 @@ function initChart() {
 
 function prepareData() {
 	data = getDataArray();
-
-	/*var rowCount = getDataRowsCount();				
-	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-		var dataRow = [];
-		var dataItemsCount = getDataItemsCount(rowIndex);
-		for (var i = 0; i < dataItemsCount; i++) {
-			dataRow.push(getDataItem(rowIndex, i));
-		}
-		data.push(dataRow);
-	}*/
-
 	labels = getLabels();		
 }
 
@@ -112,18 +101,20 @@ function drawData() {
 function redrawData() {
 	if (path != null) {
 		path.transition()
-			.duration(500)
+			.duration(300)
 			.attr({
-				"d" : arc.outerRadius(1).innerRadius(1)
-			})
-			.remove();
+				"d" : arc.outerRadius(2).innerRadius(1)
+			}).remove();			
 	}
 
-	svg.selectAll(".nodataText").remove();
-	svg.selectAll(".centerText").remove();
-	svg.selectAll(".arc").data([]).exit().remove();
+	prepareData();
+	
+	setTimeout(function() {
+		svg.selectAll(".nodataText").remove();
+		svg.selectAll(".centerText").remove();
+		svg.selectAll(".arc").data([]).exit().remove();
 
-	prepareData();	
-	drawData();
+		drawData();
+	}, 300);
 }
 
