@@ -3,6 +3,7 @@
   <groupId>ru.futurelink.rap.d3</groupId>
   <artifactId>ru.futurelink.rap.d3</artifactId>
   <version>0.0.1</version>
+  <packaging>bundle</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -14,6 +15,23 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+
+	  <plugin>
+		<groupId>org.apache.felix</groupId>
+ 		<artifactId>maven-bundle-plugin</artifactId>
+    	<extensions>true</extensions>
+    	<configuration>
+         	<source>1.7</source>
+         	<target>1.7</target>    	    
+        <manifestLocation>META-INF</manifestLocation>
+       	<instructions>
+           	<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+           	<Bundle-Version>${project.version}</Bundle-Version>
+           	<Export-Package>ru.futurelink.rap.d3.*</Export-Package>
+           	<Bundle-Activator>ru.futurelink.rap.d3.Activator</Bundle-Activator>
+       	</instructions>
+    	</configuration>
+	  </plugin>
     </plugins>
   </build>
   <dependencies>
