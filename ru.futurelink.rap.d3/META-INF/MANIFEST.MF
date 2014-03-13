@@ -1,19 +1,22 @@
 Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: D3
-Bundle-SymbolicName: ru.futurelink.rap.d3
-Bundle-Version: 0.0.1.0
+Bnd-LastModified: 1394701206846
+Build-Jdk: 1.6.0_27
+Built-By: pavlov
 Bundle-Activator: ru.futurelink.rap.d3.Activator
-Bundle-Vendor: Futurelink
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.osgi
+Bundle-ManifestVersion: 2
+Bundle-Name: Unnamed - ru.futurelink.rap.d3:ru.futurelink.rap.d3:bundle:
+ 0.0.1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.jface.viewers,
- org.eclipse.swt,
- org.eclipse.swt.browser,
- org.eclipse.swt.layout,
- org.eclipse.swt.widgets
-Export-Package: ru.futurelink.rap.d3,
- ru.futurelink.rap.d3.charts
-Bundle-ClassPath: ., resources/
+Bundle-SymbolicName: ru.futurelink.rap.d3
+Bundle-Version: 0.0.1
+Created-By: Apache Maven Bundle Plugin
+Export-Package: ru.futurelink.rap.d3;uses:="org.eclipse.jface.viewers,or
+ g.eclipse.swt.browser,org.eclipse.swt.layout,org.eclipse.swt.widgets,or
+ g.osgi.framework,ru.futurelink.rap.d3.internal";version="0.0.1",ru.futu
+ relink.rap.d3.charts;uses:="org.eclipse.swt.browser,ru.futurelink.rap.d
+ 3";version="0.0.1",ru.futurelink.rap.d3.internal;uses:="org.eclipse.swt
+ .widgets,ru.futurelink.rap.d3";version="0.0.1"
+Import-Package: org.eclipse.jface.viewers,org.eclipse.swt.browser,org.ec
+ lipse.swt.layout,org.eclipse.swt.widgets,org.osgi.framework;version="[1
+ .6,2)"
+Tool: Bnd-2.1.0.20130426-122213

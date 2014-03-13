@@ -29,6 +29,7 @@
            	<Bundle-Version>${project.version}</Bundle-Version>
            	<Export-Package>ru.futurelink.rap.d3.*</Export-Package>
            	<Bundle-Activator>ru.futurelink.rap.d3.Activator</Bundle-Activator>
+           	<Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
        	</instructions>
     	</configuration>
 	  </plugin>
@@ -51,4 +52,13 @@
   		<version>2.3.0-M1</version>
   	</dependency>
   </dependencies>
+
+    <distributionManagement>
+	<repository>
+		<id>fluvio-maven-repo</id>
+		<name>Fluvio Maven2 repo</name>
+		<url>scp://fluvio.ru/maven</url>
+	</repository>
+    </distributionManagement>
+
 </project>
