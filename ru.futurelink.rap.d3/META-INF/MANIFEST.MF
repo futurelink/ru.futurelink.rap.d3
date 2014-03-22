@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1394701206846
-Build-Jdk: 1.6.0_27
+Bnd-LastModified: 1395445727090
+Build-Jdk: 1.7.0_17
 Built-By: pavlov
+Bundle-ActivationPolicy: lazy
 Bundle-Activator: ru.futurelink.rap.d3.Activator
 Bundle-ManifestVersion: 2
-Bundle-Name: Unnamed - ru.futurelink.rap.d3:ru.futurelink.rap.d3:bundle:
- 0.0.1
+Bundle-Name: Unnamed - ru.futurelink.rap:d3:bundle:0.0.1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-SymbolicName: ru.futurelink.rap.d3
 Bundle-Version: 0.0.1

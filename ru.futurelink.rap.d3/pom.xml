@@ -1,11 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ru.futurelink.rap.d3</groupId>
-  <artifactId>ru.futurelink.rap.d3</artifactId>
+  <groupId>ru.futurelink.rap</groupId>
+  <artifactId>d3</artifactId>
   <version>0.0.1</version>
   <packaging>bundle</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
+
+    <resources>
+      <resource>
+        <directory>resources</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -25,8 +35,10 @@
          	<target>1.7</target>    	    
         <manifestLocation>META-INF</manifestLocation>
        	<instructions>
-           	<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+           	<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
            	<Bundle-Version>${project.version}</Bundle-Version>
+           	<Bundle-ClassPath>.</Bundle-ClassPath>
+           	<Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
            	<Export-Package>ru.futurelink.rap.d3.*</Export-Package>
            	<Bundle-Activator>ru.futurelink.rap.d3.Activator</Bundle-Activator>
            	<Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
